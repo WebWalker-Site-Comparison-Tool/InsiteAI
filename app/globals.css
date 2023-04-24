@@ -40,6 +40,18 @@ body {
   }
 }
 
+@keyframes fadeOutUp {
+  from {
+      transform: translate3d(0,0,0)
+  }
+
+  to {
+      transform: translate3d(0,-40px,0);
+      opacity: 0
+  }
+}
+
+
 @-webkit-keyframes fadeInUp {
   from {
       transform: translate3d(0,40px,0)
@@ -48,6 +60,17 @@ body {
   to {
       transform: translate3d(0,0,0);
       opacity: 1
+  }
+}
+
+@-webkit-keyframes fadeOutUp {
+  from {
+      transform: translate3d(0,0,0)
+  }
+
+  to {
+      transform: translate3d(0,-40px,0);
+      opacity: 0
   }
 }
 
@@ -62,8 +85,18 @@ body {
   opacity: 0
 }
 
+.animatedFadeOutUp {
+  opacity: 100;
+}
+
 .fadeInUp {
   opacity: 0;
   animation-name: fadeInUp;
   -webkit-animation-name: fadeInUp;
+}
+
+.fadeOutUp {
+  opacity: 100;
+  animation-name: fadeOutUp;
+  -webkit-animation-name: fadeOutUp;
 }
