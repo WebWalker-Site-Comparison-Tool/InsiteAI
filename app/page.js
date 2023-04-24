@@ -1,8 +1,9 @@
 'use client';
 
-import Navbar from './components/Navbar';
-import SearchBarContainer from './components/SearchBarContainer';
 import { useState } from 'react';
+import Navbar from './components/Navbar';
+import LoadingScreen from './components/LoadingScreen';
+import SearchBarContainer from './components/SearchBarContainer';
 
 export default function Home() {
   const [submittedURL, setSubmittedURL] = useState(false);
@@ -10,13 +11,14 @@ export default function Home() {
 
   const submittedURLHandler = () => {
     setSubmittedURL(!submittedURL);
-    // setIsLoading(!isLoading);
+    const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+    sleep(1000).then(() => setIsLoading(!isLoading));
   };
 
   return (
     <div className="flex justify-center items-center w-screen h-screen">
       {isLoading ? (
-        <Navbar />
+        <LoadingScreen />
       ) : (
         <SearchBarContainer
           submittedURLHandler={submittedURLHandler}
