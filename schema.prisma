@@ -1,0 +1,61 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = "mysql://kj9mu7ia4ujkeesvfffk:pscale_pw_Um6tbX9XUqQzOCyRrsN4CWCDbat13l5htMJtBaWjCCW@aws.connect.psdb.cloud/wct-db?sslaccept=strict"
+}
+
+model accessibility {
+  id          Int @id @default(autoincrement())
+  altnum      Int
+  contrastnum Int
+  linknum     Int
+  url_id      Int
+}
+
+model baseurl {
+  id  Int    @id @default(autoincrement())
+  url String @db.VarChar(255)
+  img String @db.MediumText
+}
+
+model chatgpt {
+  id       Int     @id @default(autoincrement())
+  url_id   Int
+  response String? @db.VarChar(2048)
+  rating   String? @db.VarChar(5)
+}
+
+model framework {
+  id     Int    @id @default(autoincrement())
+  fwname String @db.VarChar(20)
+}
+
+model fw_url {
+  id     Int @id @default(autoincrement())
+  url_id Int
+  fw_id  Int
+}
+
+model perf {
+  id           Int @id @default(autoincrement())
+  blocktime    Int
+  firstpaint   Int
+  longestpaint Int
+  url_id       Int
+}
+
+model rating_url {
+  id     Int @id @default(autoincrement())
+  rating Int
+  url_id Int
+  gpt_id Int
+}
+
+model seo {
+  id     Int @id @default(autoincrement())
+  score  Int
+  url_id Int
+}
