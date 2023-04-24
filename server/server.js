@@ -1,3 +1,22 @@
+
+//EXPRESS SERVER CODE HERE
+const express = require('express');
+const { chatGPTMiddleware } = require('./middleware/chatGPTMiddleware.js');  
+const app = express();
+
+app.use(express.json());
+app.use('/chat', chatGPTMiddleware, (req, res, next) => {
+  const response = "test"
+  res.json({ message: response });
+});
+
+app.listen(3000, () => {
+  console.log('Server started on port 3000');
+});
+
+
+
+//REDIS CODE
 const redis = require("redis");
 
 let redisPort = 6379;  // Replace with your redis port
