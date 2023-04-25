@@ -3,11 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "nodemon server/server.js",
+    "express": "nodemon server/server.js",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "client": "next dev"
+    "client": "next dev",
+    "concurrently": "concurrently \"npm run express\" \"npm run start\""
   },
   "dependencies": {
     "@prisma/client": "^4.13.0",
