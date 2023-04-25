@@ -3,8 +3,9 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
 }
 
 model accessibility {
@@ -16,9 +17,10 @@ model accessibility {
 }
 
 model baseurl {
-  id  Int    @id @default(autoincrement())
-  url String @db.VarChar(255)
-  img String @db.MediumText
+  id      Int    @id @default(autoincrement())
+  url     String @db.VarChar(255)
+  img     String @db.MediumText
+  dataObj Json?
 }
 
 model chatgpt {
@@ -58,4 +60,12 @@ model seo {
   id     Int @id @default(autoincrement())
   score  Int
   url_id Int
+}
+
+model ebecf5d4_bf48_5d8c_bc2e_28b113ffb8c8_20230425200551_vrepl {
+  id  Int    @id @default(autoincrement())
+  url String @db.VarChar(255)
+  img String @db.MediumText
+
+  @@map("_ebecf5d4_bf48_5d8c_bc2e_28b113ffb8c8_20230425200551_vrepl")
 }

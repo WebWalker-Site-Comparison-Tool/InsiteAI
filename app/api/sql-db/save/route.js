@@ -3,8 +3,8 @@ import { prisma } from "@/prisma";
 
 export async function POST(request) {
     // Deconstruct object - enter final vars on final object here 
-    const { url, img } = await request.json();
     const dataObj = await request.json();
+    const { url, img } = dataObj;
 
 
     // Save to prisma DB according to save query 
