@@ -18,7 +18,7 @@ model accessibility {
 
 model baseurl {
   id      Int    @id @default(autoincrement())
-  url     String @db.VarChar(255)
+  url     String @unique(map: "url") @db.VarChar(255)
   img     String @db.MediumText
   dataObj Json?
 }
@@ -68,4 +68,13 @@ model ebecf5d4_bf48_5d8c_bc2e_28b113ffb8c8_20230425200551_vrepl {
   img String @db.MediumText
 
   @@map("_ebecf5d4_bf48_5d8c_bc2e_28b113ffb8c8_20230425200551_vrepl")
+}
+
+model e5cd8890_28d1_5727_8a02_39a510863f7b_20230425225827_vrepl {
+  id      Int    @id @default(autoincrement())
+  url     String @db.VarChar(255)
+  img     String @db.MediumText
+  dataObj Json?
+
+  @@map("_e5cd8890_28d1_5727_8a02_39a510863f7b_20230425225827_vrepl")
 }

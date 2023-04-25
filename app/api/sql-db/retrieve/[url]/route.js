@@ -1,4 +1,3 @@
-import { NextResponse } from "next/server";
 import { prisma } from "@/prisma";
 
 export async function GET(request) {
@@ -27,5 +26,5 @@ export async function GET(request) {
     const searchedUrlObj = searchedUrl? searchedUrl : false
 
     // If it exists, prisma logic to return all info related to URL 
-    return NextResponse(searchedUrlObj)
+    return new Response(searchedUrlObj)
 }

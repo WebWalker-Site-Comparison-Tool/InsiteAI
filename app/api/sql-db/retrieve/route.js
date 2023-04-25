@@ -1,4 +1,3 @@
-import { NextResponse } from "next/server";
 import { prisma } from "@/prisma";
 
 export async function GET() {
@@ -8,7 +7,6 @@ export async function GET() {
             dataObj: true,
         }
     })
-
     // Return object in NextResponse;
-    return NextResponse(allRows); 
+    return new Response(allRows); 
 }
