@@ -17,7 +17,8 @@ export default function Home() {
     sleep(1000).then(() => setIsLoading(!isLoading));
 
     //JUST TO DEMO. API CALL WILL GO HERE OR SOME USE EFFECT HOOK. YOU SET EXIT LOADING FIRST TO PLAY EXIT ANIMATIONS, THEN YOU GET OUT OF IS LOADING.
-    fetch(`/api/getMetrics?=${url}`);
+    fetch(`/api/chatgpt?url=${url}`);
+    //fetch(`/api/chatgpt`);
 
     sleep(7000)
       .then(() => setExitLoading(!exitLoading))
