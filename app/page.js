@@ -39,8 +39,8 @@ export default function Home() {
           submittedURLHandler={submittedURLHandler}
           submittedURL={submittedURL}
         />
-      )}
-      {killLoadLoop && <DataPageContainer />} */}
+      )} */}
+      {/* {killLoadLoop && <DataPageContainer URL={URL} />} */}
       <DataPageContainer URL={URL} />
     </div>
   );
