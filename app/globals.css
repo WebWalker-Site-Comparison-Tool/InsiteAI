@@ -136,7 +136,7 @@ PRELOADER.
 
 .ctn-preloader .animation-preloader .txt-loading .letters-loading:before {
   animation: letters-loading 4s infinite;
-  color: #3c096c;
+  color: #2cbf7b;
   content: attr(data-text-preloader);
   left: 0;
   opacity: 0;
@@ -149,7 +149,7 @@ PRELOADER.
 This is the loading page background. Maybe can play around with this a bit.
 */
 .ctn-preloader .animation-preloader .txt-loading .letters-loading {
-	color: #7b2cbf;
+	color: #bf2c70;
 	position: relative;
 }
 
