@@ -33,7 +33,7 @@ const lighthouseMiddleware = async (req, res, next) => {
     ),
   };
 
-  console.log(metricObject);
+  //console.log(metricObject);
   res.locals.metrics = metricObject;
   return next();
 
