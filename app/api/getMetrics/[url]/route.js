@@ -21,6 +21,7 @@ export async function GET(req) {
   }
 
   let tmpArr = finalUrl.match(/getMetrics\/(.*)/);
+  let urlPlain = tmpArr[1]
   let websiteInput = "https://" + tmpArr[1] //input used for chatgpt AND redis check if cached
   //CLEANING UP THE req input LOGIC END
   //CLEANING UP THE req input LOGIC END
@@ -50,13 +51,63 @@ export async function GET(req) {
   let cacheResultsFinal;
   if (cacheResults) {
     cacheExist = true;
-    cacheResultsFinal = JSON.parse(cacheResults);
+    cacheResultsFinal = await JSON.parse(cacheResults);
   }
   //REDIS CACHE LOGIC END
   //REDIS CACHE LOGIC END
   //REDIS CACHE LOGIC END
 
+  //getting the json file from the lighthouse route in express
+  //getting the json file from the lighthouse route in express
+  //getting the json file from the lighthouse route in express
+  console.log('cache exist', cacheExist)
+  let lighthouseOutput;
+  //if (cacheExist) { 
+    console.log('cache does not exists')
+    lighthouseOutput = await fetch('http://localhost:4000/lighthouse?url='+ urlPlain) //need try catch logic
+    lighthouseOutput = await lighthouseOutput.json()
+  // } else {
+  //   console.log('cache exists')
+  //   console.log(cacheResultsFinal)
+  //   lighthouseOutput = cacheResultsFinal.lighthouseOutput;
+  // }
 
+  const {firstContentfulPaint
+    ,totalBlockingTime
+    ,largestContentfulPaint
+    ,buttonName
+    ,imageAlt
+    ,linkName
+    ,colorContrast
+    ,fontSize} = lighthouseOutput;
+
+  //create prompt for chatgpt start
+  const prompt = `Generate a 1-10 score for overall performance of a website based on the following metrics: First Contentful Paint (firstContentfulPaint), Total Blocking Time (totalBlockingTime), Largest Contentful Paint (largestContentfulPaint).
+  Generate a 1-10 score for overall accessibility of a website based on the following metrics: buttons without names (buttonName), images without alt tags (imageAlt), links without names (linkName), elements with poor color contrast (colorContrast).
+  Generate a 1-10 score for SEO of a website based on the following metrics: percentage of document with legible font sizes (fontSize).
+  Get the above metrics in the following object:
+  {
+    firstContentfulPaint: '${firstContentfulPaint}',
+    totalBlockingTime: '${totalBlockingTime}',
+    largestContentfulPaint: '${largestContentfulPaint}',
+    buttonName: '${buttonName}',
+    imageAlt: '${imageAlt}',
+    linkName: '${linkName}',
+    colorContrast: '${colorContrast}',
+    fontSize: '${fontSize}'
+  }
+  Give the 3 1-10 scores back in the format of an array of only numbers, do not include descriptions for the array. Then give me a high-level overview of how this website compares to other websites in three sentences only.`
+  //create prompt for chatgpt end
+
+  console.log(prompt)
+
+
+  //getting the json file from the lighthouse route in express END
+  //getting the json file from the lighthouse route in express END
+  //getting the json file from the lighthouse route in express END
+  
+
+  
 
   //CHATGPT LOGIC START
   //CHATGPT LOGIC START
@@ -93,18 +144,17 @@ export async function GET(req) {
   let output;
   if (cacheExist){
     console.log('cached', cacheResultsFinal) //check if chatgpt output is available
-    return new Response(websiteInput + " cached " + cacheResultsFinal);
+    return new Response(websiteInput + " cached " + JSON.stringify(cacheResultsFinal));
   } else  {
     const setup = `Answer as a UX designer`;
-    const valueInput = "1+1+5" //INPUT YOUR DATA HERE
-    const prompt = `Can you analyze this? ${valueInput}`;
     output = await chat(setup, prompt)
-    console.log('chatgpt not cached', output) //check if chatgpt output is available
-    await redisClient.set(websiteInput, JSON.stringify(output), {
+    let store = {output, lighthouseOutput}
+    console.log('chatgpt not cached', store) //check if chatgpt output is available
+    await redisClient.set(websiteInput, JSON.stringify(store), {
         EX: 180,
         NX: true,
     });
-    return new Response(websiteInput + " not cached" + output);
+    return new Response(websiteInput + " not cached" + JSON.stringify(store));
   }
   //FINALIZE to choose between cached or not cacched LOGIC END
   //FINALIZE to choose between cached or not cacched LOGIC END

@@ -35,7 +35,7 @@ const lighthouseMiddleware = async (req, res, next) => {
     libraries: data.audits["js-libraries"].details.items.map((el) => el.name),
   };
 
-  console.log(metricObject);
+  //console.log(metricObject);
   res.locals.metrics = metricObject;
   return next();
 
