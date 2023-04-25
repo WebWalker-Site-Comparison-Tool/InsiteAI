@@ -8,7 +8,7 @@ const lighthouseMiddleware = async (req, res, next) => {
   const options = {
     logLevel: "info",
     output: "json",
-    onlyCategories: ["performance", "accessibility", "seo"],
+    onlyCategories: ["performance", "accessibility", "best-practices", "seo"],
     port: chrome.port,
   };
   const runnerResult = await lighthouse("https://" + url, options);
@@ -18,6 +18,7 @@ const lighthouseMiddleware = async (req, res, next) => {
 
   // metricObject containing relevant metrics for Performance, Accessbility, SEO
   let metricObject = {
+    url: "https://" + url,
     image: data.audits["final-screenshot"].details.data,
     firstContentfulPaint: data.audits["first-contentful-paint"].displayValue,
     totalBlockingTime: data.audits["total-blocking-time"].displayValue,
@@ -31,6 +32,7 @@ const lighthouseMiddleware = async (req, res, next) => {
       0,
       data.audits["font-size"].displayValue.indexOf("%") + 1
     ),
+    libraries: data.audits["js-libraries"].details.items.map((el) => el.name),
   };
 
   console.log(metricObject);
