@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/prisma";
 
-export async function GET(req) {
+export async function GET(request) {
 
-    const url = req.url.slice(req.url.lastIndexOf('/')+1);
+    const url = request.url.slice(request.url.lastIndexOf('/')+1);
     let finalUrl;
 
     if (url.slice(0, 7) === 'http://') {
@@ -15,6 +15,12 @@ export async function GET(req) {
     }
 
     // Prisma logic to check if URL exists
+    const searchedUrl = await prisma.baseurl.findUnique({
+        where: {
+            url: url,
+        }
+    })
 
     // If it exists, prisma logic to return all info related to URL 
+    return NextResponse(searchedUrl)
 }
