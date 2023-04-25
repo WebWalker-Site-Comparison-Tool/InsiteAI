@@ -10,6 +10,7 @@
     "client": "next dev"
   },
   "dependencies": {
+    "@prisma/client": "^4.13.0",
     "autoprefixer": "10.4.14",
     "chrome-launcher": "^0.15.2",
     "dotenv": "^16.0.3",
@@ -20,6 +21,7 @@
     "nodemon": "^2.0.22",
     "openai": "^3.2.1",
     "postcss": "8.4.23",
+    "prisma": "^4.13.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "redis": "^4.6.5",
