@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url      = "mysql://kj9mu7ia4ujkeesvfffk:pscale_pw_Um6tbX9XUqQzOCyRrsN4CWCDbat13l5htMJtBaWjCCW@aws.connect.psdb.cloud/wct-db?sslaccept=strict"
+  url      = env("DATABASE_URL")
 }
 
 model accessibility {
