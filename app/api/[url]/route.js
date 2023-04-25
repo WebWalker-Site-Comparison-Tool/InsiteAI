@@ -1,4 +1,3 @@
-// import { chatGPTMiddleware } from '@/server/middleware/chatGPTMiddleware';
 import rateLimiter from './rateLimiter';
 
 let checkRedis, checkSQL, queryGPT;
@@ -22,7 +21,7 @@ export async function GET(req, { params }) {
     try {
       checkRedis = await fetch(`/getMetrics/${params.url}`);
       if (existsInRedisCache) {
-        return NextResponse.json({ res });
+        return res.json({ res });
       }
 
       // redis returned false?
@@ -30,7 +29,7 @@ export async function GET(req, { params }) {
       try {
         checkSQL = await fetch(`/sql-db/retrieve/${params.url}`);
         if (existsInSQLDatabase) {
-          return NextResponse.json({ res });
+          return res.json({ res });
         }
 
         // SQL returned false?
