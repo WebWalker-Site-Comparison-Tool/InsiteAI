@@ -6,8 +6,8 @@ export async function GET(request) {
     const url = request.url.slice(request.url.lastIndexOf('/')+1);
     let finalUrl;
 
-    if (url.slice(0, 7) === 'http://') {
-        finalUrl = 'https://' + url.slice(8);
+    if (url.slice(0, 6) === 'http://') {
+        finalUrl = 'https://' + url.slice(7);
     } else if (url.slice(0, 8) !== 'https://') {
         finalUrl = 'https://' + url;
     } else {
@@ -21,6 +21,10 @@ export async function GET(request) {
         }
     })
 
+    if(searchedUrl) {
+        const searchedUrlObj = searchedUrl.dataObj
+    }
+
     // If it exists, prisma logic to return all info related to URL 
-    return NextResponse(searchedUrl)
+    return NextResponse(searchedUrlObj)
 }
