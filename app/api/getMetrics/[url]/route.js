@@ -5,31 +5,23 @@ import * as redis from 'redis';
 config(); //loads env variables
 
 export async function GET(req) {
-
   //CLEANING UP THE req input LOGIC START
   //CLEANING UP THE req input LOGIC START
   //CLEANING UP THE req input LOGIC START
   const { url } = req;
+
   let finalUrl;
   // parse incomeing url to either add or replace starting with https://
   if (url.slice(0, 7) === "http://") {
-    finalUrl = "https://" + url.slice(7);
+    finalUrl = "https://" + url.slice(8);
   } else if (url.slice(0, 8) !== "https://") {
     finalUrl = "https://" + url;
   } else {
     finalUrl = url;
   }
+
   let tmpArr = finalUrl.match(/getMetrics\/(.*)/);
   let websiteInput = "https://" + tmpArr[1] //input used for chatgpt AND redis check if cached
-  // console.log('before', websiteInput)
-  // if (websiteInput.slice(0, 7) === "http://") {
-  //   websiteInput = "https://" + websiteInput.slice(7);
-  // } else if (websiteInput.slice(0, 8) !== "https://") {
-  //   websiteInput = "https://" + websiteInput;
-  // } else {
-  //   websiteInput = websiteInput;
-  // }
-  // console.log('after', websiteInput)
   //CLEANING UP THE req input LOGIC END
   //CLEANING UP THE req input LOGIC END
   //CLEANING UP THE req input LOGIC END
