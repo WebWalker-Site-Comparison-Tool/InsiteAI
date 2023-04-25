@@ -14,7 +14,7 @@ const DataPageContainer = ({ URL }) => {
       <div>
         {/* All the statistical views. */}
         {/* First Row */}
-        <div className="mt-10 flex justify-around items-center">
+        <div className="mt-10 flex justify-around items-center animated FadeInUp fadeInUp">
           <DataContainer classes={'p-5'}>
             <div className="text-2xl mb-5 underline hover:cursor-default">
               Performance
@@ -53,15 +53,19 @@ const DataPageContainer = ({ URL }) => {
                 Number of Links Without Names:{' '}
                 <span className="text-emerald-400 font-semibold">Test</span>
               </div>
-              <div className="hover:cursor-default text-xl">
+              <div className="hover:cursor-default text-xl mb-5">
                 Number of Images Failing Low Contrast Tests:{' '}
+                <span className="text-emerald-400 font-semibold">Test</span>
+              </div>
+              <div className="hover:cursor-default text-xl">
+                Number of Buttons Without Names:{' '}
                 <span className="text-emerald-400 font-semibold">Test</span>
               </div>
             </div>
           </DataContainer>
         </div>
         {/* Second Row */}
-        <div className="mt-10 flex justify-around items-center">
+        <div className="mt-10 flex justify-around items-center mb-5 animated FadeInUp fadeInUp">
           <DataContainer classes={'p-5'}>
             <div className="text-2xl mb-5 underline hover:cursor-default">
               SEO

@@ -31,7 +31,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-col justify-center items-center w-screen h-screen">
-      {/* {isLoading && submittedURL && !killLoadLoop && (
+      {isLoading && submittedURL && !killLoadLoop && (
         <LoadingScreen exitLoading={exitLoading} />
       )}
       {!killLoadLoop && (
@@ -39,9 +39,9 @@ export default function Home() {
           submittedURLHandler={submittedURLHandler}
           submittedURL={submittedURL}
         />
-      )} */}
-      {/* {killLoadLoop && <DataPageContainer URL={URL} />} */}
-      <DataPageContainer URL={URL} />
+      )}
+      {killLoadLoop && <DataPageContainer URL={URL} />}
+      {/* <DataPageContainer URL={URL} /> */}
     </div>
   );
 }
