@@ -10,15 +10,16 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [exitLoading, setExitLoading] = useState(false);
   const [killLoadLoop, setKillLoadLoop] = useState(false);
+  const [URL, setURL] = useState('test.com');
 
   const submittedURLHandler = async (url) => {
+    setURL(url);
     setSubmittedURL(!submittedURL);
     const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
     sleep(1000).then(() => setIsLoading(!isLoading));
 
     //JUST TO DEMO. API CALL WILL GO HERE OR SOME USE EFFECT HOOK. YOU SET EXIT LOADING FIRST TO PLAY EXIT ANIMATIONS, THEN YOU GET OUT OF IS LOADING.
     fetch(`/api/getMetrics/${url}`);
-
 
     sleep(7000)
       .then(() => setExitLoading(!exitLoading))
@@ -29,7 +30,7 @@ export default function Home() {
   };
 
   return (
-    <div className="flex justify-center items-center w-screen h-screen">
+    <div className="flex flex-col justify-center items-center w-screen h-screen">
       {isLoading && submittedURL && !killLoadLoop && (
         <LoadingScreen exitLoading={exitLoading} />
       )}
@@ -39,7 +40,8 @@ export default function Home() {
           submittedURL={submittedURL}
         />
       )}
-      {killLoadLoop && <DataPageContainer />}
+      {killLoadLoop && <DataPageContainer URL={URL} />}
+      {/* <DataPageContainer URL={URL} /> */}
     </div>
   );
 }
