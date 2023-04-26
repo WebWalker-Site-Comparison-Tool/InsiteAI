@@ -31,20 +31,20 @@ export default async function rateLimiter(ip) {
 
     if (requestCount > requestLimit) {
       console.log(`Rate limiter detected too many requests from IP ${ip}!`);
-      return {
+      return new Response ({
         requestLimit,
         requestDuration,
         requestCount,
         success: false,
-      };
+      });
     }
 
-    return {
+    return new Response ({
       requestLimit,
       requestDuration,
       requestCount,
       success: true,
-    };
+    });
   } catch (err) {
     console.log('Error in ratelimiter', err);
   }

@@ -1,15 +1,23 @@
 //import { NextResponse } from "next/server";
 import { config } from 'dotenv';
+import * as axios from 'axios'
 import { Configuration, OpenAIApi } from 'openai';
-import * as redis from 'redis';
+// import * as redis from 'redis';
 config(); //loads env variables
 
 export async function GET(req) {
-  //CLEANING UP THE req input LOGIC START
-  //CLEANING UP THE req input LOGIC START
-  //CLEANING UP THE req input LOGIC START
-  const { url } = req;
 
+  //THIS NEEDS TO CHANGE when cache exists
+  let cacheExist = false;
+  
+  //this variable is where we store the data from lighthouse, weather it be from lighthouse or cache
+  let lighthouseOutput;
+
+  // //CLEANING UP THE req input LOGIC START
+  // //CLEANING UP THE req input LOGIC START
+  // //CLEANING UP THE req input LOGIC START
+ 
+  const { url } = req;
   let finalUrl;
   // parse incomeing url to either add or replace starting with https://
   if (url.slice(0, 7) === "http://") {
@@ -19,59 +27,48 @@ export async function GET(req) {
   } else {
     finalUrl = url;
   }
-
   let tmpArr = finalUrl.match(/getMetrics\/(.*)/);
   let urlPlain = tmpArr[1]
-  let websiteInput = "https://" + tmpArr[1] //input used for chatgpt AND redis check if cached
-  //CLEANING UP THE req input LOGIC END
-  //CLEANING UP THE req input LOGIC END
-  //CLEANING UP THE req input LOGIC END
 
+  //this variable is used to check redis database
+  let websiteInput = "https://" + tmpArr[1]
+  // //CLEANING UP THE req input LOGIC END
+  // //CLEANING UP THE req input LOGIC END
+  // //CLEANING UP THE req input LOGIC END
 
 
   //REDIS CACHE LOGIC START
   //REDIS CACHE LOGIC START
   //REDIS CACHE LOGIC START
-  let cacheExist = false;
-  let redisPort = 6379;  // Replace with your redis port
-  let redisHost = "127.0.0.1";  // Replace with your redis host
-  let redisClient;
-  (async () => {
-    redisClient = redis.createClient({
-        socket: {
-        port: redisPort,
-        host: redisHost,
-        }
-    });
-    redisClient.on("error", (error) => console.error(`Error HERE WE ARE: ${error}`));
-    await redisClient.connect();
-  })();
-  //check if cache exists
-  const cacheResults = await redisClient.get(websiteInput);
-  let cacheResultsFinal;
-  if (cacheResults) {
-    cacheExist = true;
-    cacheResultsFinal = await JSON.parse(cacheResults);
+  //
+  //IMPORTANT
+  //PUT LOGIC IF CACHE EXISTS HERE websiteInput is an important variable for this block
+  //IMPORTANT
+  //
+  //REDIS CACHE LOGIC END
+  //REDIS CACHE LOGIC END
+  //REDIS CACHE LOGIC END
+
+
+
+
+  //getting the json file from the lighthouse route in express
+  //getting the json file from the lighthouse route in express
+  //getting the json file from the lighthouse route in express
+  // console.log('CACHE EXISTS VARIABLE VALUE:', cacheExist)
+  if (cacheExist===false) {
+    lighthouseOutput = await axios.get('http://localhost:4000/lighthouse?url='+ urlPlain) //need try catch logic
+    lighthouseOutput = lighthouseOutput.data
   }
-  //REDIS CACHE LOGIC END
-  //REDIS CACHE LOGIC END
-  //REDIS CACHE LOGIC END
+  //getting the json file from the lighthouse route in express END
+  //getting the json file from the lighthouse route in express END
+  //getting the json file from the lighthouse route in express END
 
-  //getting the json file from the lighthouse route in express
-  //getting the json file from the lighthouse route in express
-  //getting the json file from the lighthouse route in express
-  console.log('cache exist', cacheExist)
-  let lighthouseOutput;
-  //if (cacheExist) { 
-    console.log('cache does not exists')
-    lighthouseOutput = await fetch('http://localhost:4000/lighthouse?url='+ urlPlain) //need try catch logic
-    lighthouseOutput = await lighthouseOutput.json()
-  // } else {
-  //   console.log('cache exists')
-  //   console.log(cacheResultsFinal)
-  //   lighthouseOutput = cacheResultsFinal.lighthouseOutput;
-  // }
 
+
+  //CREATE PROMPT for chatgpt START
+  //CREATE PROMPT for chatgpt START
+  //CREATE PROMPT for chatgpt START
   const {firstContentfulPaint
     ,totalBlockingTime
     ,largestContentfulPaint
@@ -87,76 +84,57 @@ export async function GET(req) {
   Generate a 1-10 score for SEO of a website based on the following metrics: percentage of document with legible font sizes (fontSize).
   Get the above metrics in the following object:
   {
-    firstContentfulPaint: '${firstContentfulPaint}',
-    totalBlockingTime: '${totalBlockingTime}',
-    largestContentfulPaint: '${largestContentfulPaint}',
+    firstContentfulPaint: '${firstContentfulPaint} s',
+    totalBlockingTime: '${totalBlockingTime} ms',
+    largestContentfulPaint: '${largestContentfulPaint} s',
     buttonName: '${buttonName}',
     imageAlt: '${imageAlt}',
     linkName: '${linkName}',
     colorContrast: '${colorContrast}',
-    fontSize: '${fontSize}'
+    fontSize: '${fontSize}%'
   }
-  Give the 3 1-10 scores back in the format of an array of only numbers, do not include descriptions for the array. Then give me a high-level overview of how this website compares to other websites in three sentences only.`
-  //create prompt for chatgpt end
+  Give the 3 1-10 scores back in the format of an array of only numbers, and do not include details about the array before or after. Then give me a high-level overview of how this website compares to other websites in three sentences only.`
+  //CREATE PROMPT for chatgpt END
+  //CREATE PROMPT for chatgpt END
+  //CREATE PROMPT for chatgpt END
 
-  console.log(prompt)
-
-
-  //getting the json file from the lighthouse route in express END
-  //getting the json file from the lighthouse route in express END
-  //getting the json file from the lighthouse route in express END
-  
-
-  
-
-  //CHATGPT LOGIC START
-  //CHATGPT LOGIC START
-  //CHATGPT LOGIC START
-  //CHATGPT LOGIC START
-  // don't forget to create ".env" file with the line "OPENAI_API_KEY=your_secret_key here"
-  const configuration = new Configuration({
-      apiKey: process.env.OPENAI_API_KEY,
-  });
-  const openai = new OpenAIApi(configuration);
-  async function chat(prompt, setup) {
-      const response = await openai.createChatCompletion({
-      model: "gpt-3.5-turbo",
-      messages: [
-          { role: "system", content: setup },
-          {
-          role: "user",
-          content: prompt,
-          },
-      ],
-      });
-      // extract the answer from response
-      const answer = response.data.choices[0].message.content;
-      return answer;
+  //CHATGPT pull results from chatgpt
+  let chatGPTOutput
+  if (cacheExist===false){
+    console.log('here in chatgptpull')
+    try {
+      chatGPTOutput = await axios.put('http://127.0.0.1:3000/api/chatgpt', { prompt });
+      chatGPTOutput = chatGPTOutput.data;
+      console.log('type of chatgpt getmetrics ISARRAY', Array.isArray(chatGPTOutput))
+      console.log('contents of chatgpt getmetrics', chatGPTOutput)
+    } catch (error) {
+      console.log('error in getmetrics', error)
+      return new Response('error in fetch of chatgpt');
+    }
   }
-  //CHATGPT LOGIC END
-  //CHATGPT LOGIC END
-  //CHATGPT LOGIC END
-
-  
   //FINALIZE to choose between cached or not cacched LOGIC START
   //FINALIZE to choose between cached or not cacched LOGIC START
   //FINALIZE to choose between cached or not cacched LOGIC START
-  let output;
   if (cacheExist){
-    console.log('cached', cacheResultsFinal) //check if chatgpt output is available
-    return new Response(websiteInput + " cached " + JSON.stringify(cacheResultsFinal));
-  } else  {
-    const setup = `Answer as a UX designer`;
-    output = await chat(setup, prompt)
-    let store = {output, lighthouseOutput}
-    console.log('chatgpt not cached', store) //check if chatgpt output is available
-    await redisClient.set(websiteInput, JSON.stringify(store), {
-        EX: 180,
-        NX: true,
-    });
-    return new Response(websiteInput + " not cached" + JSON.stringify(store));
+    //
+    //IMPORTANT
+    //REDIS LOGIC TO PULL RESULTS???
+    //IMPORTANT
+    //
+    return new Response('PUT HERE CACHED OUTPUT');
+  } else {
+    let storedOutput = Object.assign({'chatGPTOutput': chatGPTOutput}, lighthouseOutput)
+    console.log('STOREDOUTPUT', storedOutput);
+    //
+    //IMPORTANT
+    //REDIS LOGIC TO CACHE RESULTS
+    //IMPORTANT
+    //
+    //
+    console.log('NOT CACHED')
+    return new Response(JSON.stringify(storedOutput));
   }
-  //FINALIZE to choose between cached or not cacched LOGIC END
-  //FINALIZE to choose between cached or not cacched LOGIC END
-  //FINALIZE to choose between cached or not cacched LOGIC END
+  //FINALIZE to choose between cached or not cached LOGIC END
+  //FINALIZE to choose between cached or not cached LOGIC END
+  //FINALIZE to choose between cached or not cached LOGIC END
 }
