@@ -29,14 +29,14 @@ export async function GET(req) {
 
       checkRedis = await fetch(`/getMetrics/${finalUrl}`);
       if (checkRedis) {
-        return new Response (checkRedis);
+        return new Response ( JSON.stringify(checkRedis) );
       }
       // redis returned false?
       // query sql
       try {
         checkSQL = await fetch(`/sql-db/retrieve/${finalUrl}`);
         if (checkSQL) {
-          return new Response(checkSQL);
+          return new Response( JSON.stringify(checkSQL) );
         }
 
         // QUERY CHATGPT SPEAK W ANSEL & AUSTIN
@@ -58,7 +58,7 @@ export async function GET(req) {
               console.log('Error in saving to SQL', err);
             }
             // return response
-            return new Response(SQLSave);
+            return new Response( JSON.stringify(SQLSave) );
           }
         } catch (err) {
           console.log('Error in chatGPTMiddleware', err);
