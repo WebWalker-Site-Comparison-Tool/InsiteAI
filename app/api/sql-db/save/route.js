@@ -2,9 +2,9 @@ import { prisma } from "@/prisma";
 
 export async function POST(req) {
     // Deconstruct object - enter final vars on final object here 
-    const { url, img, firstContentfulPaint, totalBlockingTime, largestContentfulPaint, buttonName, imageAlt, linkName, colorContrast, fontSize } = await req.json();
+    const { url, image, firstContentfulPaint, totalBlockingTime, largestContentfulPaint, buttonName, imageAlt, linkName, colorContrast, fontSize } = await req.json();
     const dataObj = {url, firstContentfulPaint, totalBlockingTime, largestContentfulPaint, buttonName, imageAlt, linkName, colorContrast, fontSize};
-    dataObj.image = img; 
+    dataObj.image = image; 
 
     let finalUrl;
 
@@ -21,11 +21,11 @@ export async function POST(req) {
     const newUrl = await prisma.baseurl.create({
         data: {
             url: finalUrl,
-            img: img,
+            img: image,
             dataObj: dataObj
         }
     })
 
     // Give a response that it saved properly 
-    return new Response( {newUrl} );
+    return new Response( JSON.stringify({newUrl:newUrl}) );
 }
