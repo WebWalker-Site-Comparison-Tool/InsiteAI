@@ -3,7 +3,7 @@ import DataContainer from './DataContainer';
 import PercentageLoader from './PercentageLoader';
 import ScatterGraph from './ScatterGraph';
 
-const OverviewBanner = ({ image, showOverview, isFirstRender }) => {
+const OverviewBanner = ({ image, showOverview, isFirstRender, fullData }) => {
   return (
     <div
       style={{
@@ -13,6 +13,7 @@ const OverviewBanner = ({ image, showOverview, isFirstRender }) => {
       className="pt-5 animated fadeInDown FadeInDown h-[17rem]"
     >
       <ScatterGraph
+        fullData={fullData}
         classes={`Comparisons hidden ml-[40%] ${
           showOverview ? 'animated fadeOutUp FadeOutUp' : ''
         } ${
@@ -46,7 +47,7 @@ const OverviewBanner = ({ image, showOverview, isFirstRender }) => {
             AI Analysis
           </div>
           <div className="text-xl hover:cursor-default">
-            Dummy text will go here
+            Hey you're website is pretty ok.
           </div>
         </DataContainer>
         <DataContainer

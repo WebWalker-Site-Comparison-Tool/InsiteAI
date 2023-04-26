@@ -48,6 +48,7 @@ const DataPageContainer = ({ URL, fullData, urlData }) => {
         image={sampleData.image}
         showOverview={showOverview}
         isFirstRender={isFirstRender}
+        fullData={fullData}
       />
 
       <div className="animated FadeInUp fadeInUp">

@@ -21,14 +21,18 @@ export default function Home() {
     sleep(1000).then(() => setIsLoading(!isLoading));
 
     //JUST TO DEMO. API CALL WILL GO HERE OR SOME USE EFFECT HOOK. YOU SET EXIT LOADING FIRST TO PLAY EXIT ANIMATIONS, THEN YOU GET OUT OF IS LOADING.
-    fetch(`/api/getMetrics/${url}`);
+    const fullData = await fetch('/api/sql-db/retrieve');
+    const parsedData = await fullData.json();
+    const mappedData = parsedData.map((parsedObject) => {
+      return parsedObject.dataObj;
+    });
+    setFullData(mappedData);
+    // fetch(`/api/getMetrics/${url}`);
 
-    sleep(7000)
-      .then(() => setExitLoading(!exitLoading))
-      .then(() => sleep(1200))
-      .then(() => {
-        setKillLoadLoop(true);
-      });
+    setExitLoading(!exitLoading);
+    sleep(1200).then(() => {
+      setKillLoadLoop(true);
+    });
   };
 
   return (

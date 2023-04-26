@@ -2,19 +2,17 @@ import React, { useRef } from 'react';
 import * as Plot from '@observablehq/plot';
 import * as d3 from 'd3';
 
-const ScatterGraph = ({ classes }) => {
+const ScatterGraph = ({ classes, fullData }) => {
   const scatterRef = useRef(null);
+  console.log(fullData);
 
-  const gistemp = [
-    { Date: 1880, 'Overall Rating': -0.3 },
-    { Date: 1900, 'Overall Rating': -0.21 }
-  ];
+  const gistemp = fullData;
 
   const plot = Plot.plot({
     y: {
       grid: true,
       tickFormat: '+f',
-      label: 'SEO Score'
+      label: 'SEO'
     },
     color: {
       type: 'diverging',
@@ -24,9 +22,9 @@ const ScatterGraph = ({ classes }) => {
     marks: [
       Plot.ruleY([0]),
       Plot.dot(gistemp, {
-        x: 'Date',
-        y: 'Overall Rating',
-        stroke: 'Overall Rating'
+        x: 'imageAlt',
+        y: 'SEO',
+        stroke: 'SEO'
       })
     ]
   });
