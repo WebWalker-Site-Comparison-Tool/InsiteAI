@@ -58,7 +58,7 @@ export async function GET(req) {
               console.log('Error in saving to SQL', err);
             }
             // return response
-            return res.json({ res });
+            return new Respnose(SQLSave);
           }
         } catch (err) {
           console.log('Error in chatGPTMiddleware', err);
