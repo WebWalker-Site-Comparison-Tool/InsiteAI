@@ -10,7 +10,9 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [exitLoading, setExitLoading] = useState(false);
   const [killLoadLoop, setKillLoadLoop] = useState(false);
-  const [URL, setURL] = useState('test.com');
+  const [URL, setURL] = useState('');
+  const [fullData, setFullData] = useState(null);
+  const [urlData, setURLData] = useState(null);
 
   const submittedURLHandler = async (url) => {
     setURL(url);
@@ -19,14 +21,21 @@ export default function Home() {
     sleep(1000).then(() => setIsLoading(!isLoading));
 
     //JUST TO DEMO. API CALL WILL GO HERE OR SOME USE EFFECT HOOK. YOU SET EXIT LOADING FIRST TO PLAY EXIT ANIMATIONS, THEN YOU GET OUT OF IS LOADING.
-    fetch(`/api/getMetrics/${url}`);
+    const fullData = await fetch('/api/sql-db/retrieve');
+    const parsedData = await fullData.json();
+    const mappedData = parsedData.map((parsedObject) => {
+      return parsedObject.dataObj;
+    });
+    setFullData(mappedData);
+    // const urlData = await fetch(`/api/getMetrics/${url}`);
+    // const parsedURLData = await urlData.json();
+    // console.log(parsedURLData);
+    await sleep(15000);
 
-    sleep(7000)
-      .then(() => setExitLoading(!exitLoading))
-      .then(() => sleep(1200))
-      .then(() => {
-        setKillLoadLoop(true);
-      });
+    setExitLoading(!exitLoading);
+    sleep(1200).then(() => {
+      setKillLoadLoop(true);
+    });
   };
 
   return (
@@ -40,8 +49,9 @@ export default function Home() {
           submittedURL={submittedURL}
         />
       )}
-      {killLoadLoop && <DataPageContainer URL={URL} />}
-      {/* <DataPageContainer URL={URL} /> */}
+      {killLoadLoop && (
+        <DataPageContainer URL={URL} fullData={fullData} urlData={urlData} />
+      )}
     </div>
   );
 }

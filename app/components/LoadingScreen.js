@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 const LoadingScreen = ({ exitLoading }) => {
   const [backgroundLoaded, setBackgroundLoaded] = useState(false);
@@ -8,7 +8,7 @@ const LoadingScreen = ({ exitLoading }) => {
   return (
     <div>
       <body
-        class={`${
+        className={`${
           exitLoading ? '' : 'no-scroll-y'
         } bg-[url(https://www.pixel4k.com/wp-content/uploads/2018/10/color-waves-abstract_1539371252.jpg)]`}
       >
@@ -16,52 +16,52 @@ const LoadingScreen = ({ exitLoading }) => {
           <div id="preloader">
             <div
               id="ctn-preloader"
-              class={`ctn-preloader ${
+              className={`ctn-preloader ${
                 exitLoading ? 'loaded' : 'entry-loading'
               }`}
             >
               {backgroundLoaded && (
                 <div
-                  class={`animation-preloader ${
+                  className={`animation-preloader ${
                     backgroundLoaded ? 'fade-in-loader' : ''
                   }`}
                 >
-                  <div class="spinner-preloader">
+                  <div className="spinner-preloader">
                     <div id="spinner-loader"></div>
                   </div>
-                  <div class="txt-loading">
-                    <span data-text-preloader="L" class="letters-loading">
+                  <div className="txt-loading">
+                    <span data-text-preloader="L" className="letters-loading">
                       L
                     </span>
 
-                    <span data-text-preloader="O" class="letters-loading">
+                    <span data-text-preloader="O" className="letters-loading">
                       O
                     </span>
 
-                    <span data-text-preloader="A" class="letters-loading">
+                    <span data-text-preloader="A" className="letters-loading">
                       A
                     </span>
 
-                    <span data-text-preloader="D" class="letters-loading">
+                    <span data-text-preloader="D" className="letters-loading">
                       D
                     </span>
 
-                    <span data-text-preloader="I" class="letters-loading">
+                    <span data-text-preloader="I" className="letters-loading">
                       I
                     </span>
 
-                    <span data-text-preloader="N" class="letters-loading">
+                    <span data-text-preloader="N" className="letters-loading">
                       N
                     </span>
 
-                    <span data-text-preloader="G" class="letters-loading">
+                    <span data-text-preloader="G" className="letters-loading">
                       G
                     </span>
                   </div>
                 </div>
               )}
-              <div class="loader-section section-left"></div>
-              <div class="loader-section section-right"></div>
+              <div className="loader-section section-left"></div>
+              <div className="loader-section section-right"></div>
             </div>
           </div>
         </section>
