@@ -1,54 +1,56 @@
 import rateLimiter from './rateLimiter';
 
-let checkRedis, checkSQL, queryGPT;
+let checkRedis, checkSQL, queryGPThouse;
 
-export async function GET(req, { params }) {
+export async function GET(req) {
   // throttle based on client IP & requests per 30 seconds
   const limit = await rateLimiter(req.ip);
+  
+  const url = req.url.slice(request.url.lastIndexOf('/')+1);
 
   // throttled? connection refused
   if (!limit.success) {
-    res
-      .status(429)
-      .json(
-        'Too many requests in 1 minute. Please try again in a few minutes.'
-      );
-    return;
+    return new Response('Too many requests in 1 minute. Please try again in a few minutes.');
   }
   // not throttled?
+
   // query redis first
   else
     try {
-      checkRedis = await fetch(`/getMetrics/${params.url}`);
-      if (existsInRedisCache) {
-        return res.json({ res });
+      let finalUrl;
+
+      if (url.slice(0, 7) === 'http://') {
+          finalUrl = 'https://' + url.slice(7);
+      } else if (url.slice(0, 8) !== 'https://') {
+          finalUrl = 'https://' + url;
+      } else {
+          finalUrl = url;
       }
 
+      checkRedis = await fetch(`/getMetrics/${finalUrl}`);
+      if (checkRedis) {
+        return new Response (checkRedis);
+      }
       // redis returned false?
       // query sql
       try {
-        checkSQL = await fetch(`/sql-db/retrieve/${params.url}`);
-        if (existsInSQLDatabase) {
-          return res.json({ res });
+        checkSQL = await fetch(`/sql-db/retrieve/${finalUrl}`);
+        if (checkSQL) {
+          return new Response(checkSQL);
         }
 
-        // SQL returned false?
-        // query chatgpt
+        // QUERY CHATGPT SPEAK W ANSEL & AUSTIN
         try {
-          queryGPT = await chatGPTMiddleware(params);
+          queryGPThouse = await chatGPTMiddleware(params);
           // chatGPT response good ?
-          if (queryGPT) {
+          if (queryGPThouse) {
             // save redis, pass URL and GPT data
-            try {
-            } catch (err) {
-              console.log('Error in saving to Redis', err);
-            }
+
             // save sql
             try {
-              const SQLPostReqBody = { url: params.url };
               const SQLSave = fetch(`/sql-db/save/`, {
                 method: 'post',
-                body: JSON.stringify(SQLPostReqBody),
+                body: JSON.stringify(queryGPThouse),
                 headers: { 'Content-Type': 'application/json' },
               });
               console.log(SQLSave);
@@ -56,7 +58,7 @@ export async function GET(req, { params }) {
               console.log('Error in saving to SQL', err);
             }
             // return response
-            return res.json({ res });
+            return new Response(SQLSave);
           }
         } catch (err) {
           console.log('Error in chatGPTMiddleware', err);
