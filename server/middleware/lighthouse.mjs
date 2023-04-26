@@ -17,22 +17,22 @@ const lighthouseMiddleware = async (req, res, next) => {
   // `.report` is the HTML report as a string, parsed to JSON object
   let data = JSON.parse(runnerResult.report);
 
-  // function to convert seconds string to milliseconds string
+  // function to convert seconds string to milliseconds
   function convertToMS(str) {
     if (str[str.length - 2] !== "m") {
-      let num = Number(str.slice(0, str.indexOf(" ")));
-      return (num * 1000).toString() + " ms";
+      let num = Number(str.slice(0, -2));
+      return num * 1000;
     }
-    return str;
+    return Number(str.slice(0, -3));
   }
 
-  // function to convert milliseconds string to seconds string
+  // function to convert milliseconds string to seconds
   function convertToS(str) {
     if (str[str.length - 2] === "m") {
-      let num = Number(str.slice(0, str.indexOf(" ")));
-      return (num / 1000).toString() + " s";
+      let num = Number(str.slice(0, -3));
+      return num / 1000;
     }
-    return str;
+    return Number(str.slice(0, -2));
   }
 
   // metricObject containing relevant metrics in proper format for URL, screenshot image, Performance, Accessbility, SEO, JS Libraries
@@ -52,10 +52,10 @@ const lighthouseMiddleware = async (req, res, next) => {
     imageAlt: data.audits["image-alt"].details.items.length,
     linkName: data.audits["link-name"].details.items.length,
     colorContrast: data.audits["color-contrast"].details.items.length,
-    fontSize: data.audits["font-size"].displayValue.slice(
+    fontSize: Number(data.audits["font-size"].displayValue.slice(
       0,
-      data.audits["font-size"].displayValue.indexOf("%") + 1
-    ),
+      data.audits["font-size"].displayValue.indexOf("%")
+    )),
     libraries: data.audits["js-libraries"].score
       ? data.audits["js-libraries"].details.items.map((el) => el.name)
       : [],
