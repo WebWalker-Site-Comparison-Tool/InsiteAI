@@ -2,8 +2,10 @@ import { prisma } from "@/prisma";
 
 export async function POST(req) {
     // Deconstruct object - enter final vars on final object here 
-    const { url, image, firstContentfulPaint, totalBlockingTime, largestContentfulPaint, buttonName, imageAlt, linkName, colorContrast, fontSize } = await req.json();
-    const dataObj = {url, firstContentfulPaint, totalBlockingTime, largestContentfulPaint, buttonName, imageAlt, linkName, colorContrast, fontSize};
+    const { url, image, firstContentfulPaint, totalBlockingTime, largestContentfulPaint, buttonName, imageAlt, linkName, colorContrast, libraries, chatGPTOutput, SEO, Overall, fontSize } = await req.json();
+
+    const dataObj = {url, firstContentfulPaint, totalBlockingTime, largestContentfulPaint, buttonName, imageAlt, chatGPTOutput, SEO, Overall, linkName, colorContrast, libraries, fontSize};
+    
     dataObj.image = image; 
 
     let finalUrl;
