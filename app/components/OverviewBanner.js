@@ -47,7 +47,8 @@ const OverviewBanner = ({ image, showOverview, isFirstRender, fullData }) => {
             AI Analysis
           </div>
           <div className="text-xl hover:cursor-default">
-            Hey you're website is pretty ok.
+            Hey you're website is pretty ok. You should try making it better
+            though.
           </div>
         </DataContainer>
         <DataContainer

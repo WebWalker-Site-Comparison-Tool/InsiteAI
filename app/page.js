@@ -27,9 +27,10 @@ export default function Home() {
       return parsedObject.dataObj;
     });
     setFullData(mappedData);
-    const urlData = await fetch(`/api/getMetrics/${url}`);
-    const parsedURLData = await urlData.json();
-    console.log(parsedURLData);
+    // const urlData = await fetch(`/api/getMetrics/${url}`);
+    // const parsedURLData = await urlData.json();
+    // console.log(parsedURLData);
+    await sleep(15000);
 
     setExitLoading(!exitLoading);
     sleep(1200).then(() => {

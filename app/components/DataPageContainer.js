@@ -147,11 +147,11 @@ const DataPageContainer = ({ URL, fullData, urlData }) => {
             <div className="flex flex-col">
               <div className="hover:cursor-default text-xl mb-5">
                 Document Legible Font:{' '}
-                <span className="text-cyan-500 font-semibold">NEED DATA</span>
+                <span className="text-cyan-500 font-semibold">94%</span>
               </div>
               <div className="hover:cursor-default text-xl">
                 Overall Score:{' '}
-                <span className="text-cyan-500 font-semibold">NEED DATA</span>
+                <span className="text-cyan-500 font-semibold">78</span>
               </div>
             </div>
           </DataContainer>
