@@ -418,3 +418,11 @@ Spinner
       transform: rotate(360deg);
   }
 }
+
+/*
+To hide elements.
+*/
+
+.hidden {
+  display: none;
+}

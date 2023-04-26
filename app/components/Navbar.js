@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Navbar = ({ URL }) => {
+const Navbar = ({ URL, showOverviewHandler }) => {
   return (
     <nav class="bg-white border-gray-200 dark:bg-gray-900/[.75] animated fadeInDown FadeInDown">
       <div class="max-w-screen-xl flex flex-col flex-wrap items-between justify-center mx-auto p-4">
@@ -21,6 +21,10 @@ const Navbar = ({ URL }) => {
                 href="#"
                 class="block bg-transparent hover:text-blue-700 p-0 dark:text-blue-500 font-semibold"
                 aria-current="page"
+                onClick={(e) => {
+                  e.preventDefault();
+                  showOverviewHandler(true);
+                }}
               >
                 Overview
               </a>
@@ -29,7 +33,10 @@ const Navbar = ({ URL }) => {
               <a
                 href=""
                 class="block bg-transparent hover:text-blue-700 p-0 dark:text-white font-semibold"
-                onClick={(e) => e.preventDefault()}
+                onClick={(e) => {
+                  e.preventDefault();
+                  showOverviewHandler(false);
+                }}
               >
                 Comparisons
               </a>
