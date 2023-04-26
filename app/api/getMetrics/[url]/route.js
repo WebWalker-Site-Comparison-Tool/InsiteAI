@@ -84,26 +84,29 @@ export async function GET(req) {
   Generate a 1-10 score for SEO of a website based on the following metrics: percentage of document with legible font sizes (fontSize).
   Get the above metrics in the following object:
   {
-    firstContentfulPaint: '${firstContentfulPaint}',
-    totalBlockingTime: '${totalBlockingTime}',
-    largestContentfulPaint: '${largestContentfulPaint}',
+    firstContentfulPaint: '${firstContentfulPaint} s',
+    totalBlockingTime: '${totalBlockingTime} ms',
+    largestContentfulPaint: '${largestContentfulPaint} s',
     buttonName: '${buttonName}',
     imageAlt: '${imageAlt}',
     linkName: '${linkName}',
     colorContrast: '${colorContrast}',
-    fontSize: '${fontSize}'
+    fontSize: '${fontSize}%'
   }
-  Give the 3 1-10 scores back in the format of an array of only numbers, do not include descriptions for the array. Then give me a high-level overview of how this website compares to other websites in three sentences only.`
+  Give the 3 1-10 scores back in the format of an array of only numbers, and do not include details about the array before or after. Then give me a high-level overview of how this website compares to other websites in three sentences only.`
   //CREATE PROMPT for chatgpt END
   //CREATE PROMPT for chatgpt END
   //CREATE PROMPT for chatgpt END
-
 
   //CHATGPT pull results from chatgpt
+  let chatGPTOutput
   if (cacheExist===false){
+    console.log('here in chatgptpull')
     try {
-      let chatGPTOutput = await axios.put('http://127.0.0.1:3000/api/chatgpt', { prompt });
+      chatGPTOutput = await axios.put('http://127.0.0.1:3000/api/chatgpt', { prompt });
       chatGPTOutput = chatGPTOutput.data;
+      console.log('type of chatgpt getmetrics ISARRAY', Array.isArray(chatGPTOutput))
+      console.log('contents of chatgpt getmetrics', chatGPTOutput)
     } catch (error) {
       console.log('error in getmetrics', error)
       return new Response('error in fetch of chatgpt');
@@ -120,7 +123,8 @@ export async function GET(req) {
     //
     return new Response('PUT HERE CACHED OUTPUT');
   } else {
-    let storedOutput = {chatGPTOutput, lighthouseOutput}
+    let storedOutput = Object.assign({'chatGPTOutput': chatGPTOutput}, lighthouseOutput)
+    console.log('STOREDOUTPUT', storedOutput);
     //
     //IMPORTANT
     //REDIS LOGIC TO CACHE RESULTS
