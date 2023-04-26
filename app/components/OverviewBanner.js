@@ -12,7 +12,15 @@ const OverviewBanner = ({ image, showOverview, isFirstRender }) => {
       }}
       className="pt-5 animated fadeInDown FadeInDown h-[17rem]"
     >
-      <ScatterGraph classes={'Comparisons hidden ml-[40%]'} />
+      <ScatterGraph
+        classes={`Comparisons hidden ml-[40%] ${
+          showOverview ? 'animated fadeOutUp FadeOutUp' : ''
+        } ${
+          !showOverview && !isFirstRender
+            ? 'animated fadeInDown FadeInDown'
+            : ''
+        }`}
+      />
       <div className="flex Overview">
         <DataContainer
           classes={`ml-[25%] p-5 ${

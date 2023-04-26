@@ -8,7 +8,7 @@ import sampleData from '../../sampleData';
 
 //Instead of passing the URL as a prop, pass the actual state.
 
-const DataPageContainer = ({ URL }) => {
+const DataPageContainer = ({ URL, fullData, urlData }) => {
   const [showOverview, setShowOverview] = useState(true);
   const [isFirstRender, setIsFirstRender] = useState(true);
 
@@ -43,7 +43,7 @@ const DataPageContainer = ({ URL }) => {
 
   return (
     <body className="bg-[url(https://www.pixel4k.com/wp-content/uploads/2018/10/color-waves-abstract_1539371252.jpg)]">
-      <Navbar URL={sampleData.url} showOverviewHandler={showOverviewHandler} />
+      <Navbar URL={URL} showOverviewHandler={showOverviewHandler} />
       <OverviewBanner
         image={sampleData.image}
         showOverview={showOverview}

@@ -6,15 +6,15 @@ const ScatterGraph = ({ classes }) => {
   const scatterRef = useRef(null);
 
   const gistemp = [
-    { Date: 1880, Anomaly: -0.3 },
-    { Date: 1900, Anomaly: -0.21 }
+    { Date: 1880, 'Overall Rating': -0.3 },
+    { Date: 1900, 'Overall Rating': -0.21 }
   ];
 
   const plot = Plot.plot({
     y: {
       grid: true,
       tickFormat: '+f',
-      label: '↑ Surface temperature anomaly (°F)'
+      label: 'SEO Score'
     },
     color: {
       type: 'diverging',
@@ -23,7 +23,11 @@ const ScatterGraph = ({ classes }) => {
     },
     marks: [
       Plot.ruleY([0]),
-      Plot.dot(gistemp, { x: 'Date', y: 'Anomaly', stroke: 'Anomaly' })
+      Plot.dot(gistemp, {
+        x: 'Date',
+        y: 'Overall Rating',
+        stroke: 'Overall Rating'
+      })
     ]
   });
 

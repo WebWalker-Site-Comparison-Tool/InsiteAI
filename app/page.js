@@ -10,7 +10,9 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [exitLoading, setExitLoading] = useState(false);
   const [killLoadLoop, setKillLoadLoop] = useState(false);
-  const [URL, setURL] = useState('test.com');
+  const [URL, setURL] = useState('https://reddit.com');
+  const [fullData, setFullData] = useState(null);
+  const [urlData, setURLData] = useState(null);
 
   const submittedURLHandler = async (url) => {
     setURL(url);
@@ -31,7 +33,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-col justify-center items-center w-screen h-screen">
-      {/* {isLoading && submittedURL && !killLoadLoop && (
+      {isLoading && submittedURL && !killLoadLoop && (
         <LoadingScreen exitLoading={exitLoading} />
       )}
       {!killLoadLoop && (
@@ -40,8 +42,9 @@ export default function Home() {
           submittedURL={submittedURL}
         />
       )}
-      {killLoadLoop && <DataPageContainer URL={URL} />} */}
-      <DataPageContainer URL={URL} />
+      {killLoadLoop && (
+        <DataPageContainer URL={URL} fullData={fullData} urlData={urlData} />
+      )}
     </div>
   );
 }
