@@ -65,3 +65,10 @@ Lighthouse-AI is currently in beta status. Development is active and ongoing on 
 ## License
 
 Lighthouse-AI is an [MIT-licensed open source project](LICENSE).
+
+<div id="imgwrapper" align="center">
+<img src="./docs/chrome-color-svgrepo-com.svg" height="45px" width="45px"/> <img src="./docs/d3.svg" height="45px" width="45px"/> <img src="./docs/expressjs-icon.svg" height="45px" width="45px"/> <img src="./docs/google-lighthouse-icon-may-2019-.svg" height="45px" width="45px"/> <img src="./docs/next-dot-js-svgrepo-com.svg" height="45px" width="45px"/> <img src="./docs/openai-svgrepo-com.svg" height="45px" width="45px"/><img src="./docs/prisma-svgrepo-com.svg" height="45px" width="45px"/>
+<img src="./docs/react-svgrepo-com.svg" height="45px" width="45px"/> <img src="./docs/redis-svgrepo-com.svg" height="45px" width="45px"/>  <img src="./docs/tailwind-svgrepo-com.svg" height="45px" width="45px"/>
+</div>
+
+
