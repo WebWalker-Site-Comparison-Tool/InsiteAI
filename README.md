@@ -25,15 +25,13 @@
 
 - Additional SQL data storage to selectively compare datapoints
 
-## Installation
+## Quick Start
 
 **Using npm** 
 
 ```bash
 $ npm i 
 ```
-
-## Quick Start
 
 ```bash
 $ npm run concurrently
@@ -65,3 +63,10 @@ Lighthouse-AI is currently in beta status. Development is active and ongoing on 
 ## License
 
 Lighthouse-AI is an [MIT-licensed open source project](LICENSE).
+
+<div id="imgwrapper" align="center">
+<img alt="Node JS" src="./docs/node.svg" height="45px" width="45px"/> <img alt="d3 JS" src="./docs/d3.svg" height="45px" width="45px"/> <img alt="Express" src="./docs/express.svg" height="45px" width="45px"/> <img alt="Google Lighthouse" src="./docs/lighthouse.svg" height="45px" width="45px"/> <img alt="Next JS" src="./docs/next.svg" height="45px" width="45px"/> <img alt="OpenAI" src="./docs/openai.svg" height="45px" width="45px"/><img alt="Prisma" src="./docs/prisma.svg" height="45px" width="45px"/>
+<img alt="React" src="./docs/react.svg" height="45px" width="45px"/> <img alt="Redis" src="./docs/redis.svg" height="45px" width="45px"/>  <img alt="Tailwind CSS" src="./docs/tailwind.svg" height="45px" width="45px"/>
+</div>
+
+
