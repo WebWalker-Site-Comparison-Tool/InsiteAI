@@ -26,5 +26,5 @@ export async function GET(request) {
     const searchedUrlObj = searchedUrl? searchedUrl : false
 
     // If it exists, prisma logic to return all info related to URL 
-    return new Response(searchedUrlObj)
+    return new Response( JSON.stringify(searchedUrlObj) )
 }

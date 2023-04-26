@@ -8,5 +8,5 @@ export async function GET() {
         }
     })
     // Return object in NextResponse;
-    return new Response(allRows); 
+    return new Response( JSON.stringify(allRows) ); 
 }
