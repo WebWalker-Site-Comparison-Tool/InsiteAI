@@ -1,6 +1,7 @@
 import React from 'react';
 import DataContainer from './DataContainer';
 import PercentageLoader from './PercentageLoader';
+import ScatterGraph from './ScatterGraph';
 
 const OverviewBanner = ({ image, showOverview, isFirstRender }) => {
   return (
@@ -11,6 +12,7 @@ const OverviewBanner = ({ image, showOverview, isFirstRender }) => {
       }}
       className="pt-5 animated fadeInDown FadeInDown h-[17rem]"
     >
+      <ScatterGraph classes={'Comparisons hidden ml-[40%]'} />
       <div className="flex Overview">
         <DataContainer
           classes={`ml-[25%] p-5 ${

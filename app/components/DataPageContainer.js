@@ -55,7 +55,7 @@ const DataPageContainer = ({ URL }) => {
         {/* First Row */}
         <div className="mt-10 flex justify-around items-center animated FadeInUp fadeInUp Overview">
           <DataContainer
-            classes={`p-5 ${
+            classes={`p-5 w-[34rem] ${
               !showOverview ? 'animated fadeOutUp FadeOutUp' : ''
             } ${
               showOverview && !isFirstRender
@@ -81,12 +81,8 @@ const DataPageContainer = ({ URL }) => {
               </div>
             </div>
             <div className="flex w-full">
-              <div className="hover:cursor-default text-xl w-1/2 mr-auto mb-5 ">
-                Number of Images:{' '}
-                <span className="text-pink-700 font-semibold">NEED DATA</span>
-              </div>
-              <div className="hover:cursor-default text-xl w-1/2">
-                Time To Largest Paint:{' '}
+              <div className="hover:cursor-default text-xl w-full">
+                Time To Largest Contentful Paint:{' '}
                 <span className="text-pink-700 font-semibold">
                   {sampleData.largestContentfulPaint}
                 </span>
@@ -176,7 +172,6 @@ const DataPageContainer = ({ URL }) => {
           </DataContainer>
         </div>
       </div>
-      <div className="Comparisons hidden">TEEEEEEEEESSSSSSSSTTTTT</div>
     </body>
   );
 };
