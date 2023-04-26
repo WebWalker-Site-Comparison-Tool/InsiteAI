@@ -10,7 +10,7 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [exitLoading, setExitLoading] = useState(false);
   const [killLoadLoop, setKillLoadLoop] = useState(false);
-  const [URL, setURL] = useState('https://reddit.com');
+  const [URL, setURL] = useState('');
   const [fullData, setFullData] = useState(null);
   const [urlData, setURLData] = useState(null);
 
@@ -27,7 +27,9 @@ export default function Home() {
       return parsedObject.dataObj;
     });
     setFullData(mappedData);
-    // fetch(`/api/getMetrics/${url}`);
+    const urlData = await fetch(`/api/getMetrics/${url}`);
+    const parsedURLData = await urlData.json();
+    console.log(parsedURLData);
 
     setExitLoading(!exitLoading);
     sleep(1200).then(() => {
