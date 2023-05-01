@@ -5,7 +5,7 @@
 }
 -->
 
-# Lighthouse-AI
+# Insite-AI
 
 <p align="center">
 <img src="./public/logo.png" width="120" alt="Nest Logo" />
